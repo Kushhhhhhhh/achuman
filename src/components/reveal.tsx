@@ -41,10 +41,10 @@ export function Reveal({
   return (
     <div
       ref={ref}
+      data-reveal=""
+      data-shown={shown ? "" : undefined}
       style={{ transitionDelay: `${delay}ms` }}
-      className={`transition duration-700 ease-out motion-reduce:transition-none motion-reduce:opacity-100 ${
-        shown ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
-      } ${className}`}
+      className={`transition duration-700 ease-out motion-reduce:transition-none ${className}`}
     >
       {children}
     </div>

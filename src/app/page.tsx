@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { FLOWER_SPOTS, FLOWERS } from "@/components/flowers";
 import { Reveal } from "@/components/reveal";
 import { photos } from "@/lib/photos";
 import { site } from "@/lib/site";
@@ -20,7 +21,7 @@ export default function Home() {
       {/* ── hero ─────────────────────────────────────────────────────────── */}
       <section className="mx-auto grid w-full max-w-6xl items-center gap-12 px-5 pt-10 pb-20 sm:pt-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:pt-28">
         <div className="rise order-2 text-center lg:order-1 lg:text-left">
-          <p className="font-hand text-2xl text-rose sm:text-3xl">
+          <p className="font-hand text-2xl text-rose-ink sm:text-3xl">
             {site.kicker} <span className="text-ink/80">{site.name}</span>
           </p>
 
@@ -52,7 +53,7 @@ export default function Home() {
             <div className="relative -rotate-2 overflow-hidden rounded-[2.25rem] border-[10px] border-white shadow-[0_30px_60px_-28px_rgba(120,70,130,0.6)]">
               <Image
                 src={hero.src}
-                alt={`A photo of ${site.name}`}
+                alt={`${site.name}, smiling on a bench under a tree`}
                 width={hero.width}
                 height={hero.height}
                 placeholder="blur"
@@ -95,6 +96,8 @@ export default function Home() {
                     <PhotoCard
                       photo={photo}
                       index={index}
+                      flower={index}
+                      alt=""
                       sizes="(min-width: 1024px) 22rem, (min-width: 640px) 20rem, 82vw"
                       className={`mx-auto w-full max-w-xs sm:max-w-sm ${
                         flipped ? "lg:order-2" : "lg:order-1"
@@ -108,10 +111,10 @@ export default function Home() {
                     }`}
                   >
                     <div className="flex items-center justify-center gap-3 lg:justify-start">
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/80 font-display text-sm font-semibold text-rose ring-1 ring-white">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/80 font-display text-sm font-semibold text-rose-ink ring-1 ring-white">
                         {String(index + 1).padStart(2, "0")}
                       </span>
-                      <h3 className="font-hand text-2xl text-rose sm:text-3xl">
+                      <h3 className="font-hand text-2xl text-rose-ink sm:text-3xl">
                         {item.lead}
                       </h3>
                     </div>
@@ -147,6 +150,7 @@ export default function Home() {
               <PhotoCard
                 photo={photo}
                 index={index}
+                alt={`${site.name}, photo ${index + 1} of ${galleryPhotos.length}`}
                 sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
               />
             </Reveal>
@@ -178,7 +182,7 @@ export default function Home() {
             <p className="mt-10 text-right font-hand text-2xl text-ink-soft">
               {site.letter.signoff}
               <br />
-              <span className="text-rose">{site.letter.signature}</span>
+              <span className="text-rose-ink">{site.letter.signature}</span>
             </p>
           </article>
         </Reveal>
@@ -188,7 +192,7 @@ export default function Home() {
       <footer className="pb-14 text-center">
         <p className="font-hand text-xl text-ink-soft">
           {site.footer}, for {site.name}{" "}
-          <span aria-hidden className="text-rose">
+          <span aria-hidden className="text-rose-ink">
             ♡
           </span>
         </p>
@@ -223,35 +227,56 @@ function SectionHeading({
 function PhotoCard({
   photo,
   index,
+  alt,
   sizes,
+  flower,
   className = "",
 }: {
   photo: (typeof photos)[number];
   index: number;
+  /** Empty for photos that only illustrate text already on the page. */
+  alt: string;
   sizes: string;
+  /** Index into FLOWERS, for the list photos. Omitted on the photo wall. */
+  flower?: number;
   className?: string;
 }) {
+  const Flower = flower === undefined ? null : FLOWERS[flower % FLOWERS.length];
+
   return (
-    <figure
+    <div
       style={{ "--tilt": TILTS[index % TILTS.length] } as React.CSSProperties}
-      className={`group relative overflow-hidden rounded-[1.75rem] border-[6px] border-white bg-white shadow-[0_18px_40px_-22px_rgba(120,70,130,0.65)] transition duration-500 ease-out rotate-[var(--tilt)] hover:-translate-y-1.5 hover:rotate-0 hover:shadow-[0_26px_50px_-20px_rgba(120,70,130,0.7)] ${className}`}
+      className={`group relative ${className}`}
     >
-      <Image
-        src={photo.src}
-        alt={`A photo of ${site.name}`}
-        width={photo.width}
-        height={photo.height}
-        placeholder="blur"
-        blurDataURL={photo.blurDataURL}
-        quality={90}
-        sizes={sizes}
-        className="h-auto w-full transition duration-700 ease-out group-hover:scale-[1.04]"
-      />
-      <span
-        aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-rose/25 via-transparent to-transparent opacity-0 transition duration-500 group-hover:opacity-100"
-      />
-    </figure>
+      <figure className="relative overflow-hidden rounded-[1.75rem] border-[6px] border-white bg-white shadow-[0_18px_40px_-22px_rgba(120,70,130,0.65)] transition duration-500 ease-out rotate-[var(--tilt)] group-hover:-translate-y-1.5 group-hover:rotate-0 group-hover:shadow-[0_26px_50px_-20px_rgba(120,70,130,0.7)]">
+        <Image
+          src={photo.src}
+          alt={alt}
+          width={photo.width}
+          height={photo.height}
+          placeholder="blur"
+          blurDataURL={photo.blurDataURL}
+          quality={90}
+          sizes={sizes}
+          className="h-auto w-full transition duration-700 ease-out group-hover:scale-[1.04]"
+        />
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-rose/25 via-transparent to-transparent opacity-0 transition duration-500 group-hover:opacity-100"
+        />
+      </figure>
+
+      {Flower ? (
+        <span
+          aria-hidden
+          className={`pointer-events-none absolute z-10 h-12 w-12 drop-shadow-[0_4px_8px_rgba(120,70,130,0.3)] transition-transform duration-500 ease-out group-hover:scale-110 sm:h-16 sm:w-16 ${
+            FLOWER_SPOTS[flower! % FLOWER_SPOTS.length]
+          }`}
+        >
+          <Flower />
+        </span>
+      ) : null}
+    </div>
   );
 }
 

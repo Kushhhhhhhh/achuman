@@ -17,6 +17,11 @@ Each entry in `adore.items` has a short `lead` (the handwritten label) and a `te
 paragraph. Add or remove entries freely; each one picks up the next photo in the running
 order automatically, and anything left over fills the photo wall below.
 
+Every entry also gets its own flower tucked onto a corner of its photo: sakura, daisy,
+tulip, lavender, hibiscus, lotus, forget-me-not, sunflower, in that order. They live in
+`src/components/flowers.tsx`, along with `FLOWER_SPOTS`, which decides which corner each
+one sits on. Past eight entries the flowers start again from the beginning.
+
 ## Changing the photos
 
 **`originals/` is the source of truth. Never edit `public/photos/` by hand.** It's
@@ -68,6 +73,9 @@ The fonts in `src/app/_fonts/` and the JPEG in `src/app/_og/` exist only for tha
   Link previews still work; unfurlers don't honour `noindex`.
 - Petals fall once, on her very first visit, then never again, remembered in
   `localStorage` under `petals-seen`. Clear that key to see them again.
+- The flower in the bottom corner is the scroll indicator. It stays hidden at the
+  very top, then opens one petal roughly every fifth of the page, with a thin ring
+  tracking the exact position. Same five petals as the site icon.
 - Both the petals and the page animations are skipped for anyone who has
   "reduce motion" turned on.
 - `originals/` keeps your untouched source files; nothing is deleted.

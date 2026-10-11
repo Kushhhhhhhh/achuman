@@ -20,7 +20,7 @@ type Petal = {
 };
 
 /**
- * Petals drifting down — but only the very first time this browser opens the
+ * Petals drifting down, but only the very first time this browser opens the
  * page. After that it's remembered in localStorage and never runs again.
  */
 export function Petals() {
@@ -33,7 +33,7 @@ export function Petals() {
       if (localStorage.getItem(STORAGE_KEY)) return;
       localStorage.setItem(STORAGE_KEY, "1");
     } catch {
-      // private mode / storage blocked — show them once for this page view
+      // private mode or storage blocked, so show them once for this page view
     }
 
     setPetals(
