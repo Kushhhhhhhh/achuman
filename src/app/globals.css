@@ -1,26 +1,135 @@
 @import "tailwindcss";
 
+@theme {
+  /* dreamy pastel palette */
+  --color-cream: #fffaf7;
+  --color-blush: #ffe1ee;
+  --color-rose: #f79ec0;
+  --color-petal: #ffd2e4;
+  --color-lilac: #cdbcf9;
+  --color-haze: #e8e1ff;
+  --color-sky: #cfe9ff;
+  --color-mint: #c6f1de;
+  --color-ink: #4a3754;
+  --color-ink-soft: #6a5879;
+
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: var(--font-quicksand), ui-sans-serif, system-ui, sans-serif;
+  --font-hand: var(--font-caveat), ui-serif, cursive;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  background-color: #fffaf7;
+  background-image:
+    radial-gradient(60rem 40rem at 8% -8%, #ffdcec 0%, transparent 62%),
+    radial-gradient(52rem 38rem at 95% 2%, #e6dcff 0%, transparent 58%),
+    radial-gradient(46rem 34rem at 50% 42%, #d9efff 0%, transparent 55%),
+    radial-gradient(56rem 40rem at 10% 92%, #ffe6f3 0%, transparent 60%),
+    radial-gradient(48rem 36rem at 92% 100%, #dcf6ea 0%, transparent 58%);
+  background-attachment: fixed;
+}
+
+/* soft drifting blobs behind the hero */
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(1.5rem, -2rem, 0) scale(1.08);
+  }
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.4rem);
+  }
+}
+
+.animate-drift {
+  animation: drift 18s ease-in-out infinite;
+}
+
+.animate-bob {
+  animation: bob 3.2s ease-in-out infinite;
+}
+
+/* entrance for above-the-fold content — pure CSS, no JS needed */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise {
+  animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* first-visit petals */
+@keyframes petal-fall {
+  0% {
+    transform: translate3d(0, -15vh, 0) rotate(0deg);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.95;
+  }
+  85% {
+    opacity: 0.95;
+  }
+  100% {
+    transform: translate3d(var(--petal-drift), 115vh, 0)
+      rotate(var(--petal-spin));
+    opacity: 0;
+  }
+}
+
+.petal {
+  position: absolute;
+  top: 0;
+  border-radius: 60% 0 60% 0;
+  opacity: 0;
+  box-shadow: 0 1px 4px -1px rgba(150, 90, 150, 0.25);
+  animation: petal-fall var(--petal-duration) linear var(--petal-delay) forwards;
+}
+
+/* lined-paper feel for the letter */
+.paper {
+  background-image: linear-gradient(
+    to bottom,
+    transparent calc(2.25rem - 1px),
+    rgba(122, 96, 140, 0.13) calc(2.25rem - 1px),
+    transparent 2.25rem
+  );
+  background-size: 100% 2.25rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-drift,
+  .animate-bob,
+  .rise {
+    animation: none;
+  }
 }

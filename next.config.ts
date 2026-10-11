@@ -1,10 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   cacheComponents: true,
   partialPrefetching: true,
   reactCompiler: true,
+  images: {
+    // Next 16 requires an explicit allowlist of quality values.
+    qualities: [75, 90],
+    localPatterns: [{ pathname: "/photos/**", search: "" }],
+  },
   turbopack: {
     rules: {
       "*.css": {
