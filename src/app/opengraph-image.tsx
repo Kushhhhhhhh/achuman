@@ -98,7 +98,7 @@ export default async function Image() {
               maxWidth: 520,
             }}
           >
-            {site.gallery.subtitle}
+            {site.tagline}
           </div>
         </div>
 

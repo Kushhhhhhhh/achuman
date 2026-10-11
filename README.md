@@ -1,6 +1,6 @@
 # for Achu 🌸
 
-A small appreciation site — a hero, a shuffled photo gallery, and a letter.
+A small appreciation site: a hero, a list of things he adores about her, a photo wall, and a closing note.
 
 ## Run it
 
@@ -10,18 +10,22 @@ npm run dev
 
 ## Changing the words
 
-Everything you'd want to edit lives in **`src/lib/site.ts`** — her name, the headings,
-and the letter (rewrite `letter.paragraphs` in your own words; the defaults are a starting point).
+Everything you'd want to edit lives in **`src/lib/site.ts`**: her name, the headings,
+the list in `adore.items`, and the closing note in `letter.paragraphs`.
+
+Each entry in `adore.items` has a short `lead` (the handwritten label) and a `text`
+paragraph. Add or remove entries freely; each one picks up the next photo in the running
+order automatically, and anything left over fills the photo wall below.
 
 ## Changing the photos
 
-**`originals/` is the source of truth. Never edit `public/photos/` by hand** — it's
+**`originals/` is the source of truth. Never edit `public/photos/` by hand.** It's
 generated, and everything in it gets overwritten.
 
 To add, replace or remove a photo:
 
 1. Drop new files into `public/` (or straight into `originals/`). To **replace** one,
-   overwrite the file in `originals/` keeping the same filename — that keeps its place
+   overwrite the file in `originals/` keeping the same filename, which keeps its place
    in the running order.
 2. Run:
 
@@ -43,7 +47,7 @@ photo in the order is the hero; the rest fill the gallery.
 Output files are named `16-84eaca6c.webp`, where the suffix is a hash of the source
 image. Change the photo and the URL changes with it, so the browser, the CDN and Next's
 image optimizer all fetch the new one. Reusing a filename is what causes a swapped photo
-to keep showing the old version — this makes that impossible.
+to keep showing the old version. This makes that impossible.
 
 ## The link preview
 
@@ -51,7 +55,7 @@ to keep showing the old version — this makes that impossible.
 WhatsApp, iMessage, Discord, etc. It's generated at build time from the hero photo and
 the text in `site.ts`, so it updates itself when you change her name or the subtitle.
 
-**Before you share the link**, set the real domain — otherwise the preview points at
+**Before you share the link**, set the real domain, otherwise the preview points at
 localhost and won't load for her. Either set `NEXT_PUBLIC_SITE_URL` on your host, or edit
 `url` in `src/lib/site.ts`.
 
@@ -60,9 +64,9 @@ The fonts in `src/app/_fonts/` and the JPEG in `src/app/_og/` exist only for tha
 
 ## Notes
 
-- The page is fully static and set to `noindex` — it won't show up in search results.
+- The page is fully static and set to `noindex`, so it won't show up in search results.
   Link previews still work; unfurlers don't honour `noindex`.
-- Petals fall once, on her very first visit, then never again — remembered in
+- Petals fall once, on her very first visit, then never again, remembered in
   `localStorage` under `petals-seen`. Clear that key to see them again.
 - Both the petals and the page animations are skipped for anyone who has
   "reduce motion" turned on.
