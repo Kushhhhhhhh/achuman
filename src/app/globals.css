@@ -87,13 +87,16 @@ body {
 }
 
 /*
- * Scroll reveals. The hidden state is scoped to `.js`, which an inline script
- * adds before the page paints, so with JavaScript off (or broken) every
- * section is simply visible instead of stuck at opacity 0.
+ * Scroll reveals. Sections only start hidden when the browser says scripts
+ * can run, so with JavaScript off every section is simply visible instead of
+ * stuck at opacity 0. Browsers too old to understand the query skip the block
+ * and show everything without the fade.
  */
-.js [data-reveal]:not([data-shown]) {
-  opacity: 0;
-  transform: translateY(2rem);
+@media (scripting: enabled) {
+  [data-reveal]:not([data-shown]) {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
 }
 
 /*
@@ -197,7 +200,7 @@ body {
   .rise {
     animation: none;
   }
-  .js [data-reveal]:not([data-shown]) {
+  [data-reveal]:not([data-shown]) {
     opacity: 1;
     transform: none;
   }

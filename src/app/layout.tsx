@@ -46,12 +46,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${fraunces.variable} ${quicksand.variable} ${caveat.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col overflow-x-hidden">
-        {/* Runs before the page paints. Without it, nothing is ever hidden. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `document.documentElement.classList.add("js")`,
-          }}
-        />
         <TabTitle away={site.awayTitle} />
         <Petals />
         <ScrollBloom />
