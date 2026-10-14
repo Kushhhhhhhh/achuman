@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 
-const STORAGE_KEY = "petals-seen";
 const PETAL_COUNT = 20;
 /** Long enough for the slowest petal to land, then the whole thing unmounts. */
 const TEARDOWN_MS = 13_000;
@@ -19,22 +18,12 @@ type Petal = {
   tint: string;
 };
 
-/**
- * Petals drifting down, but only the very first time this browser opens the
- * page. After that it's remembered in localStorage and never runs again.
- */
+/** Petals drifting down every time the page loads, reloads included. */
 export function Petals() {
   const [petals, setPetals] = useState<Petal[] | null>(null);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    try {
-      if (localStorage.getItem(STORAGE_KEY)) return;
-      localStorage.setItem(STORAGE_KEY, "1");
-    } catch {
-      // private mode or storage blocked, so show them once for this page view
-    }
 
     setPetals(
       Array.from({ length: PETAL_COUNT }, (): Petal => {

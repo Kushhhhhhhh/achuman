@@ -71,8 +71,7 @@ The fonts in `src/app/_fonts/` and the JPEG in `src/app/_og/` exist only for tha
 
 - The page is fully static and set to `noindex`, so it won't show up in search results.
   Link previews still work; unfurlers don't honour `noindex`.
-- Petals fall once, on her very first visit, then never again, remembered in
-  `localStorage` under `petals-seen`. Clear that key to see them again.
+- Petals fall every time the page loads, reloads included.
 - The flower in the bottom corner is the scroll indicator. It stays hidden at the
   very top, then opens one petal roughly every fifth of the page, with a thin ring
   tracking the exact position. Same five petals as the site icon.
